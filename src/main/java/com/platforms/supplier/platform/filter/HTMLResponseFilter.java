@@ -23,7 +23,8 @@ public class HTMLResponseFilter implements Filter {
 
         String requestUri = ((HttpServletRequest) request).getRequestURI();
         RestTemplate restTemplate = new RestTemplate();
-        String html = restTemplate.postForObject("http://rendering-service:5000/render", new RenderingRequest(requestUri), String.class);
+        String html = restTemplate.postForObject("http://rendering-service:5000/render",
+                new RenderingRequest(requestUri.substring(requestUri.lastIndexOf("/"))), String.class);
         response.getWriter().write(html);
     }
 

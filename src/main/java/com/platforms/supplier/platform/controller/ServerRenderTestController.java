@@ -15,4 +15,8 @@ public class ServerRenderTestController {
     public void home() {
     }
 
+    @GetMapping(value = "/greetings", produces = "text/html")
+    public void greeting() {
+    }
+
 }
