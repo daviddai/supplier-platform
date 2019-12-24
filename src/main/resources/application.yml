@@ -1,4 +1,2 @@
 server:
-  servlet:
-    context-path: /supplier-platform
   port: 8084
