@@ -35,7 +35,7 @@ const client = {
         path: path.resolve(__dirname, 'build/client'),
         filename: 'client.js'
     }
-}
+};
 
 module.exports = [
     merge(javascriptLoader, server),
