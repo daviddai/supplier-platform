@@ -7,5 +7,7 @@ services:
     ports:
       - "8084:8084"
       - "4084:4084"
+      - "5000:5000"
     volumes:
       - ../build/libs:/vol/development/
+      - ../build/express:/usr/renderer

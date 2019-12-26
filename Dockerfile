@@ -16,6 +16,15 @@ ENV LANG C.UTF-8
 
 RUN apk add --no-cache bash
 
+RUN apk add --update nodejs
+
+RUN npm install -g yarn
+
+RUN mkdir -p /usr/renderer/
+VOLUME /usr/renderer/
+WORKDIR /usr/renderer/
+CMD ["yarn", "run", "boot"]
+
 # add a simple script that can auto-detect the appropriate JAVA_HOME value
 # based on whether the JDK or only the JRE is installed
 RUN { \

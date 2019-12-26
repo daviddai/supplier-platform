@@ -44,10 +44,17 @@ task copyCompiledExpressFile(type: Copy) {
     into 'build/express'
 }
 
+// todo: find a better task name
+task copyExpressDependencyPackage(type: Copy) {
+    from 'src/main/javascript/package.json'
+    into 'build/express'
+}
+
 webpackBuild.dependsOn(npmInstall)
 copyGeneratedStaticFile.dependsOn(webpackBuild)
 
 jar {
     dependsOn copyGeneratedStaticFile
     dependsOn copyCompiledExpressFile
+    dependsOn copyExpressDependencyPackage
 }
