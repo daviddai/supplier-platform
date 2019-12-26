@@ -32,9 +32,16 @@ task webpackBuild(type: Exec) {
     commandLine 'npm', 'run', 'build'
 }
 
+// todo: find a better task name
 task copyGeneratedStaticFile(type: Copy) {
     from 'src/main/javascript/build/client'
     into 'src/main/resources/static'
+}
+
+// todo: find a better task name
+task copyCompiledExpressFile(type: Copy) {
+    from 'src/main/javascript/build/server'
+    into 'build/express'
 }
 
 webpackBuild.dependsOn(npmInstall)
@@ -42,4 +49,5 @@ copyGeneratedStaticFile.dependsOn(webpackBuild)
 
 jar {
     dependsOn copyGeneratedStaticFile
+    dependsOn copyCompiledExpressFile
 }
