@@ -22,8 +22,6 @@ RUN npm install -g yarn
 
 RUN mkdir -p /usr/renderer/
 VOLUME /usr/renderer/
-WORKDIR /usr/renderer/
-CMD ["yarn", "run", "boot"]
 
 # add a simple script that can auto-detect the appropriate JAVA_HOME value
 # based on whether the JDK or only the JRE is installed
@@ -47,5 +45,10 @@ RUN set -x \
 
 RUN mkdir -p /vol/development/
 VOLUME /vol/development/
-WORKDIR /vol/development/
-CMD ["java", "-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=4084", "-jar", "supplier-platform-1.0-SNAPSHOT.jar"]
+
+COPY entryPoint.sh /docker/entryPoint.sh
+RUN chmod +x /docker/entryPoint.sh
+ENTRYPOINT "/docker/entryPoint.sh"
+
+#WORKDIR /vol/development/
+#CMD ["java", "-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=4084", "-jar", "supplier-platform-1.0-SNAPSHOT.jar"]
