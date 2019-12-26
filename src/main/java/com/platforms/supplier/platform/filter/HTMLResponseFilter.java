@@ -22,10 +22,12 @@ public class HTMLResponseFilter implements Filter {
         chain.doFilter(request, response);
 
         String requestUri = ((HttpServletRequest) request).getRequestURI();
-        RestTemplate restTemplate = new RestTemplate();
-        String html = restTemplate.postForObject("http://rendering-service:5000/render",
-                new RenderingRequest(requestUri.substring(requestUri.lastIndexOf("/"))), String.class);
-        response.getWriter().write(html);
+        if (!requestUri.endsWith(".js")) {
+            RestTemplate restTemplate = new RestTemplate();
+            String html = restTemplate.postForObject("http://localhost:5000/render",
+                    new RenderingRequest(requestUri.substring(requestUri.lastIndexOf("/"))), String.class);
+            response.getWriter().write(html);
+        }
     }
 
     @Override

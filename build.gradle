@@ -32,7 +32,14 @@ task webpackBuild(type: Exec) {
     commandLine 'npm', 'run', 'build'
 }
 
+task copyGeneratedStaticFile(type: Copy) {
+    from 'src/main/javascript/build/client'
+    into 'src/main/resources/static'
+}
+
+webpackBuild.dependsOn(npmInstall)
+copyGeneratedStaticFile.dependsOn(webpackBuild)
+
 jar {
-    dependsOn npmInstall
-    dependsOn webpackBuild
+    dependsOn copyGeneratedStaticFile
 }
