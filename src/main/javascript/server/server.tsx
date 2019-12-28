@@ -4,7 +4,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 
 import Application from '../Application';
-import Greeting from '../component/Greeting';
+import Greeting from '../page/Greeting';
 
 import getRendered from './index';
 
@@ -24,7 +24,7 @@ app.get('/ping', (req, res) => {
 });
 
 app.get('/ssr', (req, res) => {
-    const html = getRendered(renderToString(<Greeting salution="Mr" name="David" />))
+    const html = getRendered(renderToString(<Greeting salutation="Mr" name="David" />))
     res.send(html);
 });
 

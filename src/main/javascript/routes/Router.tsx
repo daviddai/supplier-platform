@@ -1,6 +1,8 @@
 import React from 'react';
-import Greeting from '../component/Greeting';
-import Home from '../component/Home';
+import Greeting from '../page/Greeting';
+import Home from '../page/Home';
+import AddProductPage from '../page/AddProductPage';
+
 import { Switch, Route, StaticRouter, RouteProps } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -8,11 +10,15 @@ const routes: Array<RouteProps> = [
     {
         path: '/greetings',
         component: Greeting,
-        render: () => <Greeting salution="Mr" name="David" />
+        render: () => <Greeting salutation="Mr" name="David" />
     },
     {
         path: '/home',
         component: Home
+    },
+    {
+        path: '/addProduct',
+        component: AddProductPage
     }
 ];
 

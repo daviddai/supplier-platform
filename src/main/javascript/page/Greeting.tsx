@@ -1,7 +1,7 @@
 import React from 'react';
 
 export interface GreetingProps {
-    salution: string,
+    salutation: string,
     name: string
 }
 
@@ -18,7 +18,7 @@ class Greeting extends React.Component<GreetingProps> {
     render() {
         return (
             <div>
-                Hello {this.props.salution} {this.props.name}
+                Hello {this.props.salutation} {this.props.name}
                 <br/>
                 <button onClick={this.showAlert}>Show Alert</button>
             </div>

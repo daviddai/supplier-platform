@@ -2,6 +2,7 @@ package com.platforms.supplier.platform.filter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,11 +19,14 @@ public class HTMLResponseFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
         chain.doFilter(request, response);
 
         String requestUri = ((HttpServletRequest) request).getRequestURI();
-        if (!requestUri.endsWith(".js")) {
+
+        if (response.getContentType().equals(MediaType.TEXT_HTML_VALUE)) {
             RestTemplate restTemplate = new RestTemplate();
             String html = restTemplate.postForObject("http://localhost:5000/render",
                     new RenderingRequest(requestUri.substring(requestUri.lastIndexOf("/"))), String.class);
