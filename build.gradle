@@ -50,11 +50,22 @@ task copyExpressDependencyPackage(type: Copy) {
     into 'build/express'
 }
 
+// todo: find a better task name
+task deleteJavascriptBuildFolder(type: Delete) {
+    delete 'src/main/javascript/build/'
+}
+
 webpackBuild.dependsOn(npmInstall)
 copyGeneratedStaticFile.dependsOn(webpackBuild)
+copyCompiledExpressFile.dependsOn(webpackBuild)
 
 jar {
     dependsOn copyGeneratedStaticFile
     dependsOn copyCompiledExpressFile
     dependsOn copyExpressDependencyPackage
+    dependsOn copyCompiledExpressFile
+}
+
+clean {
+    dependsOn deleteJavascriptBuildFolder
 }

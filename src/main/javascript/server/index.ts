@@ -1,7 +1,9 @@
 const getRendered = (body: string) => `
     <!DOCTYPE html>
     <html>
-        <head></head>
+        <head>
+            <link rel="stylesheet" type="text/css" href="/main.css">
+        </head>
         <body>
             <div id="app">
                 ${body}

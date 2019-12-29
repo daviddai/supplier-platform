@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const merge = require('webpack-merge');
 
 const javascriptLoader = {
@@ -17,30 +18,15 @@ const javascriptLoader = {
     }
 };
 
-const clientCssLoader = {
-    resolve: {
-        extensions: ['.css']
-    },
+const cssLoader = {
+    plugins: [new MiniCssExtractPlugin()],
     module: {
         rules: [
             {
-                test: /\.css$/,
-                loader: 'style-loader!css-loader'
-            }
-        ]
-    }
-};
-const serverCssLoader = {
-    resolve: {
-        extensions: ['.css']
-    },
-    module: {
-        rules: [
-            {
-                test: /\.css$/,
-                loader: 'css-loader'
-            }
-        ]
+                test: /\.css$/i,
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
+            },
+        ],
     }
 };
 
@@ -65,6 +51,6 @@ const client = {
 };
 
 module.exports = [
-    merge(serverCssLoader, javascriptLoader, server),
-    merge(clientCssLoader, javascriptLoader, client)
+    merge(javascriptLoader, server),
+    merge(cssLoader, javascriptLoader, client)
 ];

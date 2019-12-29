@@ -1,9 +1,6 @@
 import React from 'react';
 import Router from './routes/Router';
 
-import 'ignore-styles';
-import "bootstrap/dist/css/bootstrap.min.css";
-
 type ApplicationPropsShape = {
     requestUri?: string
 };
