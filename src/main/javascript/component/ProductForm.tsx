@@ -3,7 +3,8 @@ import { useFormik } from 'formik';
 
 export interface ProductFormProps {
     name: string,
-    description: string
+    description: string,
+    formHandler: Function,
 }
 
 const ProductForm = (props: ProductFormProps) => {
@@ -14,7 +15,7 @@ const ProductForm = (props: ProductFormProps) => {
             description: props.description
         },
         onSubmit: (values: object) => {
-            console.log(JSON.stringify(values));
+            props.formHandler(values);
         },
     });
 
