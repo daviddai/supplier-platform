@@ -1,17 +1,14 @@
 import React from 'react';
+import ProductForm from "../component/ProductForm";
 
-
-export interface AddProductProps {
-    name: string,
-    description: string
-}
-
-class AddProductPage extends React.Component<AddProductProps> {
+class AddProductPage extends React.Component {
 
     render() {
         return (
             <div>
-                Add Product
+                <ProductForm name=""
+                             description=""
+                />
             </div>
         )
     }

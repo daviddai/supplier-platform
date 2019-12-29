@@ -20,18 +20,24 @@ const ProductForm = (props: ProductFormProps) => {
 
     return (
         <form onSubmit={formik.handleSubmit}>
-            <label>Name:</label>
+            <label>Name:&nbsp;</label>
             <input id="name"
                    name="name"
+                   onChange={formik.handleChange}
                    value={formik.values.name}
             />
-            <label>Description:</label>
+            <br/><br/>
+            <label>Description:&nbsp;</label>
             <input id="description"
                    name="description"
+                   onChange={formik.handleChange}
                    value={formik.values.description}
             />
+            <br/><br/>
             <button type="submit">Submit</button>
         </form>
     );
 
 };
+
+export default ProductForm;
