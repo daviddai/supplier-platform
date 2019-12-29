@@ -26,7 +26,7 @@ public class HTMLResponseFilter implements Filter {
 
         String requestUri = ((HttpServletRequest) request).getRequestURI();
 
-        if (response.getContentType().equals(MediaType.TEXT_HTML_VALUE)) {
+        if (MediaType.TEXT_HTML_VALUE.equals(response.getContentType())) {
             RestTemplate restTemplate = new RestTemplate();
             String html = restTemplate.postForObject("http://localhost:5000/render",
                     new RenderingRequest(requestUri.substring(requestUri.lastIndexOf("/"))), String.class);

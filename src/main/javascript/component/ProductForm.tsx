@@ -11,12 +11,27 @@ export interface ProductFormProps {
 
 const ProductForm = (props: ProductFormProps) => {
 
+    const validate = (values: any) => {
+        const errors: any = {};
+        
+        if (!values.name) {
+           errors.name = 'Product name cannot be empty';
+        }
+
+        if (!values.description) {
+            errors.description = 'Product description cannot be empty';
+        }
+
+        return errors;
+    };
+
     const formik = useFormik({
         initialValues: {
             name: props.name,
             description: props.description
         },
-        onSubmit: (values: object) => {
+        validate,
+        onSubmit: (values: any) => {
             props.formHandler(values);
         },
     });
@@ -30,6 +45,9 @@ const ProductForm = (props: ProductFormProps) => {
                               onChange={formik.handleChange}
                               value={formik.values.name}
                 />
+                {
+                    formik.errors.name ? <Form.Text className="text-muted">{formik.errors.name}</Form.Text> : null
+                }
             </Form.Group>
             <Form.Group>
                 <Form.Label>Description</Form.Label>
@@ -39,6 +57,9 @@ const ProductForm = (props: ProductFormProps) => {
                               onChange={formik.handleChange}
                               value={formik.values.description}
                 />
+                {
+                    formik.errors.description ? <Form.Text className="text-muted">{formik.errors.description}</Form.Text> : null
+                }
             </Form.Group>
             <Button variant="primary" type="submit">Submit</Button>
         </Form>
