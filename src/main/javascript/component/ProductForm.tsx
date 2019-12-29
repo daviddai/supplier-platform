@@ -22,28 +22,26 @@ const ProductForm = (props: ProductFormProps) => {
     });
 
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <Form>
-                <Form.Group>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control id="name"
-                                  name="name"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.name}
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control id="description"
-                                  name="description"
-                                  as="textarea"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.description}
-                    />
-                </Form.Group>
-                <Button variant="primary" type="submit">Submit</Button>
-            </Form>
-        </form>
+        <Form onSubmit={formik.handleSubmit}>
+            <Form.Group>
+                <Form.Label>Name</Form.Label>
+                <Form.Control id="name"
+                              name="name"
+                              onChange={formik.handleChange}
+                              value={formik.values.name}
+                />
+            </Form.Group>
+            <Form.Group>
+                <Form.Label>Description</Form.Label>
+                <Form.Control id="description"
+                              name="description"
+                              as="textarea"
+                              onChange={formik.handleChange}
+                              value={formik.values.description}
+                />
+            </Form.Group>
+            <Button variant="primary" type="submit">Submit</Button>
+        </Form>
     );
 
 };

@@ -55,17 +55,22 @@ task deleteJavascriptBuildFolder(type: Delete) {
     delete 'src/main/javascript/build/'
 }
 
+// todo: find a better task name
+task deleteGeneratedFilesInStaticBuildFolder(type: Delete) {
+    delete 'src/main/resources/static/'
+}
+
 webpackBuild.dependsOn(npmInstall)
 copyGeneratedStaticFile.dependsOn(webpackBuild)
 copyCompiledExpressFile.dependsOn(webpackBuild)
 
-jar {
+compileJava {
     dependsOn copyGeneratedStaticFile
     dependsOn copyCompiledExpressFile
     dependsOn copyExpressDependencyPackage
-    dependsOn copyCompiledExpressFile
 }
 
 clean {
     dependsOn deleteJavascriptBuildFolder
+    dependsOn deleteGeneratedFilesInStaticBuildFolder
 }

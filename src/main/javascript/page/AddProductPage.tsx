@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductForm from "../component/ProductForm";
+import { Container } from "react-bootstrap";
 
 class AddProductPage extends React.Component {
 
@@ -9,12 +10,13 @@ class AddProductPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <Container>
+                <h1 className="text-center">Add New Product</h1>
                 <ProductForm name=""
                              description=""
                              formHandler={this.addProduct}
                 />
-            </div>
+            </Container>
         )
     }
 
