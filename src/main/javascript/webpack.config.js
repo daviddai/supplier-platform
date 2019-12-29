@@ -17,6 +17,33 @@ const javascriptLoader = {
     }
 };
 
+const clientCssLoader = {
+    resolve: {
+        extensions: ['.css']
+    },
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader'
+            }
+        ]
+    }
+};
+const serverCssLoader = {
+    resolve: {
+        extensions: ['.css']
+    },
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                loader: 'css-loader'
+            }
+        ]
+    }
+};
+
 const server = {
     mode: 'development',
     target: 'node',
@@ -38,6 +65,6 @@ const client = {
 };
 
 module.exports = [
-    merge(javascriptLoader, server),
-    merge(javascriptLoader, client)
+    merge(serverCssLoader, javascriptLoader, server),
+    merge(clientCssLoader, javascriptLoader, client)
 ];
