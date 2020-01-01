@@ -60,11 +60,18 @@ task deleteGeneratedFilesInStaticBuildFolder(type: Delete) {
     delete 'src/main/resources/static/'
 }
 
+// todo: find a better task name
+task copyRebootNodeScript(type: Copy) {
+    from 'rebootExpress.sh'
+    into 'build/express/'
+}
+
 webpackBuild.dependsOn(npmInstall)
 copyGeneratedStaticFile.dependsOn(webpackBuild)
 copyCompiledExpressFile.dependsOn(webpackBuild)
 
 compileJava {
+    dependsOn copyRebootNodeScript
     dependsOn copyGeneratedStaticFile
     dependsOn copyCompiledExpressFile
     dependsOn copyExpressDependencyPackage
