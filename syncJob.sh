@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-build_express_folder="./build/express";
-express_folder="./src/main/javascript/build/server/server.js";
+build_express_server="./build/express";
+build_express_public="./build/express/public";
+server_js="./src/main/javascript/build/server/server.js";
+client_js="./src/main/javascript/build/client/client.js";
 
 # sync express renderer service
-if test -f "$express_folder"; then
-    cp ${express_folder} ${build_express_folder}
-    echo "server.js has been updated";
-    echo "Now try to restart rendering server...";
-    docker exec rendering-service /usr/rendering-service/rebootExpress.sh
-    echo "Rendering server restarted";
+if test -f "$server_js"; then
+    cp ${server_js} ${build_express_server}
+    cp ${client_js} ${build_express_public}
+    echo "Done"
 else
     echo "server.js does not exist"
 fi
