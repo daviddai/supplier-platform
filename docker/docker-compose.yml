@@ -1,13 +1,20 @@
-version : '2'
+version: "3"
+
 services:
   supplier-platform:
     container_name: supplier-platform
     tty: true
-    build: ../
+    build: ./supplier-platform
     ports:
       - "8084:8084"
       - "4084:4084"
-      - "5000:5000"
     volumes:
       - ../build/libs:/vol/development/
-      - ../build/express:/usr/renderer
+
+  rendering-service:
+    build: ./rendering-service
+    container_name: "rendering-service"
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../build/express:/usr/rendering-service/

@@ -8,7 +8,7 @@ if test -f "$express_folder"; then
     cp ${express_folder} ${build_express_folder}
     echo "server.js has been updated";
     echo "Now try to restart rendering server...";
-    docker exec supplier-platform /usr/renderer/rebootExpress.sh
+    docker exec rendering-service /usr/rendering-service/rebootExpress.sh
     echo "Rendering server restarted";
 else
     echo "server.js does not exist"

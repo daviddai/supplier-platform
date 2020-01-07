@@ -28,7 +28,7 @@ public class HTMLResponseFilter implements Filter {
 
         if (MediaType.TEXT_HTML_VALUE.equals(response.getContentType())) {
             RestTemplate restTemplate = new RestTemplate();
-            String html = restTemplate.postForObject("http://localhost:5000/render",
+            String html = restTemplate.postForObject("http://rendering-service:5000/render",
                     new RenderingRequest(requestUri.substring(requestUri.lastIndexOf("/"))), String.class);
             response.getWriter().write(html);
         }

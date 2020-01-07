@@ -35,7 +35,7 @@ task webpackBuild(type: Exec) {
 // todo: find a better task name
 task copyGeneratedStaticFile(type: Copy) {
     from 'src/main/javascript/build/client'
-    into 'src/main/resources/static'
+    into 'build/express/public'
 }
 
 // todo: find a better task name
@@ -55,10 +55,10 @@ task deleteJavascriptBuildFolder(type: Delete) {
     delete 'src/main/javascript/build/'
 }
 
-// todo: find a better task name
-task deleteGeneratedFilesInStaticBuildFolder(type: Delete) {
-    delete 'src/main/resources/static/'
-}
+//// todo: find a better task name
+//task deleteGeneratedFilesInStaticBuildFolder(type: Delete) {
+//    delete 'src/main/resources/static/'
+//}
 
 // todo: find a better task name
 task copyRebootNodeScript(type: Copy) {
@@ -79,5 +79,4 @@ compileJava {
 
 clean {
     dependsOn deleteJavascriptBuildFolder
-    dependsOn deleteGeneratedFilesInStaticBuildFolder
 }

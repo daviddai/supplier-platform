@@ -1,0 +1,11 @@
+version : '2'
+services:
+  supplier-platform:
+    container_name: supplier-platform
+    tty: true
+    build: ../
+    ports:
+      - "8084:8084"
+      - "4084:4084"
+    volumes:
+      - ../../build/libs:/vol/development/

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-pkill -f node
+chmod +x /usr/rendering-service/rebootExpress.sh
+
 node /usr/rendering-service/server.js

@@ -17,7 +17,7 @@ app.use(
     }),
 );
 
-app.use('/static', express.static('build/client'));
+app.use('/', express.static('public'));
 
 app.get('/ping', (req, res) => {
     res.send('pong');

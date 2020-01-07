@@ -2,14 +2,14 @@ const getRendered = (body: string) => `
     <!DOCTYPE html>
     <html>
         <head>
-            <link rel="stylesheet" type="text/css" href="/main.css">
+            <link rel="stylesheet" type="text/css" href="http://localhost:5000/main.css">
         </head>
         <body>
             <div id="app">
                 ${body}
             </div>
         </body>
-        <script src="/client.js"></script>
+        <script src="http://localhost:5000/client.js"></script>
     </html>
 `;
 
