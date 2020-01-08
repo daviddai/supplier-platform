@@ -44,6 +44,7 @@ const client = {
     mode: 'development',
     target: 'web',
     entry: './client/client.tsx',
+    watch: true,
     output: {
         path: path.resolve(__dirname, 'build/client'),
         filename: 'client.js'
