@@ -1,11 +1,17 @@
 import React from 'react';
 import { useFormik } from 'formik';
 
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Col } from 'react-bootstrap';
+
+export interface AvailableRule {
+    startDate: string,
+    endDate: string
+}
 
 export interface ProductFormProps {
-    name: string,
-    description: string,
+    name?: string,
+    description?: string,
+    availableRules?: Array<AvailableRule>,
     formHandler: Function,
 }
 
@@ -61,6 +67,31 @@ const ProductForm = (props: ProductFormProps) => {
                     formik.errors.description ? <Form.Text className="text-muted">{formik.errors.description}</Form.Text> : null
                 }
             </Form.Group>
+            <Form.Group>
+                <Form.Label>Availability Rules</Form.Label>
+                {
+                    props.availableRules && props.availableRules.map((rule) =>
+                        <Form.Row>
+                            <Form.Group as={Col}>
+                                <Form.Control value={rule.startDate}
+                                              placeholder="Start date (dd-mm-yyyy)"
+                                />
+                            </Form.Group>
+                            <Form.Group as={Col}>
+                                <Form.Control value={rule.endDate}
+                                              placeholder="End dat (dd-mm-yyyy)"
+                                />
+                            </Form.Group>
+                        </Form.Row>
+                    )
+                }
+                <div>
+                    <a href="#">Add new rule</a>
+                </div>
+            </Form.Group>
+
+
+
             <Button variant="primary" type="submit">Submit</Button>
         </Form>
     );

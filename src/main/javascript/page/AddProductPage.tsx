@@ -9,13 +9,11 @@ class AddProductPage extends React.Component {
     };
 
     render() {
+
         return (
             <Container>
                 <h1 className="text-center">Add New Product</h1>
-                <ProductForm name=""
-                             description=""
-                             formHandler={this.addProduct}
-                />
+                <ProductForm formHandler={this.addProduct} />
             </Container>
         )
     }
