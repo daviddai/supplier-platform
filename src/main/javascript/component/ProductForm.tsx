@@ -30,7 +30,9 @@ const ProductForm = (props: ProductFormProps) => {
         
         if (values.availabilityRules) {
             errors.availabilityRules = {};
+
             values.availabilityRules.map((rule: AvailabilityRule, index: number) => {
+
                 if (!rule.startDate) {
                     errors.availabilityRules['ar_' + index + '_startDate'] = 'Start date cannot be empty';
                 }
@@ -39,6 +41,10 @@ const ProductForm = (props: ProductFormProps) => {
                     errors.availabilityRules['ar_' + index + '_endDate'] = 'End date cannot be empty';
                 }
             });
+
+            if (Object.keys(errors.availabilityRules).length === 0) {
+                delete errors['availabilityRules'];
+            }
         }
 
         return errors;
@@ -95,12 +101,11 @@ const ProductForm = (props: ProductFormProps) => {
                 {
                     formik.values.availabilityRules &&
                     formik.values.availabilityRules.map((rule: AvailabilityRule, index: number) =>
-                        <Form.Row>
+                        <Form.Row key={"ar_" + index}>
                             <Form.Group as={Col}>
-                                <Form.Control key={"ar_" + index + "_startDate"}
-                                              name={"ar_" + index + "_startDate"}
-                                              value={rule.startDate}
+                                <Form.Control name={"availabilityRules[" + index + "]['startDate']"}
                                               onChange={formik.handleChange}
+                                              value={rule.startDate}
                                               placeholder="Start date (dd-mm-yyyy)"
                                 />
                                 {
@@ -109,10 +114,9 @@ const ProductForm = (props: ProductFormProps) => {
                                 }
                             </Form.Group>
                             <Form.Group as={Col}>
-                                <Form.Control key={"ar_" + index + "_endDate"}
-                                              name={"ar_" + index + "_endDate"}
-                                              value={rule.endDate}
+                                <Form.Control name={"availabilityRules[" + index + "]['endDate']"}
                                               onChange={formik.handleChange}
+                                              value={rule.endDate}
                                               placeholder="End date (dd-mm-yyyy)"
                                 />
                                 {
