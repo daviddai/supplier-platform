@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 
 import { Button, Form, Col } from 'react-bootstrap';
 
-export interface AvailableRule {
+export interface AvailabilityRule {
     startDate: string,
     endDate: string
 }
@@ -11,7 +11,7 @@ export interface AvailableRule {
 export interface ProductFormProps {
     name?: string,
     description?: string,
-    availableRules?: Array<AvailableRule>,
+    availabilityRules?: Array<AvailabilityRule>,
     formHandler: Function,
 }
 
@@ -70,7 +70,7 @@ const ProductForm = (props: ProductFormProps) => {
             <Form.Group>
                 <Form.Label>Availability Rules</Form.Label>
                 {
-                    props.availableRules && props.availableRules.map((rule) =>
+                    props.availabilityRules && props.availabilityRules.map((rule) =>
                         <Form.Row>
                             <Form.Group as={Col}>
                                 <Form.Control value={rule.startDate}
