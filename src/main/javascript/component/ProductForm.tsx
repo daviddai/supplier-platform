@@ -97,7 +97,8 @@ const ProductForm = (props: ProductFormProps) => {
                     formik.values.availabilityRules.map((rule: AvailabilityRule, index: number) =>
                         <Form.Row>
                             <Form.Group as={Col}>
-                                <Form.Control name={"ar_" + index + "_startDate"}
+                                <Form.Control key={"ar_" + index + "_startDate"}
+                                              name={"ar_" + index + "_startDate"}
                                               value={rule.startDate}
                                               onChange={formik.handleChange}
                                               placeholder="Start date (dd-mm-yyyy)"
@@ -108,10 +109,11 @@ const ProductForm = (props: ProductFormProps) => {
                                 }
                             </Form.Group>
                             <Form.Group as={Col}>
-                                <Form.Control name={"ar_" + index + "_endDate"}
+                                <Form.Control key={"ar_" + index + "_endDate"}
+                                              name={"ar_" + index + "_endDate"}
                                               value={rule.endDate}
                                               onChange={formik.handleChange}
-                                              placeholder="End dat (dd-mm-yyyy)"
+                                              placeholder="End date (dd-mm-yyyy)"
                                 />
                                 {
                                     formik.errors.availabilityRules && formik.errors.availabilityRules['ar_' + index + '_endDate']
