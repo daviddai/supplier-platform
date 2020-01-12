@@ -27,6 +27,19 @@ const ProductForm = (props: ProductFormProps) => {
         if (!values.description) {
             errors.description = 'Product description cannot be empty';
         }
+        
+        if (values.availabilityRules) {
+            errors.availabilityRules = {};
+            values.availabilityRules.map((rule: AvailabilityRule, index: number) => {
+                if (!rule.startDate) {
+                    errors.availabilityRules['ar_' + index + '_startDate'] = 'Start date cannot be empty';
+                }
+
+                if (!rule.endDate) {
+                    errors.availabilityRules['ar_' + index + '_endDate'] = 'End date cannot be empty';
+                }
+            });
+        }
 
         return errors;
     };
@@ -48,6 +61,7 @@ const ProductForm = (props: ProductFormProps) => {
             startDate: "",
             endDate: ""
         };
+
         formik.values.availabilityRules.push(newAvailabilityRule);
     };
 
@@ -85,14 +99,24 @@ const ProductForm = (props: ProductFormProps) => {
                             <Form.Group as={Col}>
                                 <Form.Control name={"ar_" + index + "_startDate"}
                                               value={rule.startDate}
+                                              onChange={formik.handleChange}
                                               placeholder="Start date (dd-mm-yyyy)"
                                 />
+                                {
+                                    formik.errors.availabilityRules && formik.errors.availabilityRules['ar_' + index + '_startDate']
+                                        ? <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_startDate']}</Form.Text> : null
+                                }
                             </Form.Group>
                             <Form.Group as={Col}>
                                 <Form.Control name={"ar_" + index + "_endDate"}
                                               value={rule.endDate}
+                                              onChange={formik.handleChange}
                                               placeholder="End dat (dd-mm-yyyy)"
                                 />
+                                {
+                                    formik.errors.availabilityRules && formik.errors.availabilityRules['ar_' + index + '_endDate']
+                                        ? <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_endDate']}</Form.Text> : null
+                                }
                             </Form.Group>
                         </Form.Row>
                     )
