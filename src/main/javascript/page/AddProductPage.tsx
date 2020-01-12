@@ -9,7 +9,6 @@ class AddProductPage extends React.Component {
     };
 
     render() {
-
         return (
             <Container>
                 <h1 className="text-center">Add New Product</h1>

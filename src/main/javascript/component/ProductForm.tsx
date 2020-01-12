@@ -34,13 +34,22 @@ const ProductForm = (props: ProductFormProps) => {
     const formik = useFormik({
         initialValues: {
             name: props.name,
-            description: props.description
+            description: props.description,
+            availabilityRules: props.availabilityRules || []
         },
         validate,
         onSubmit: (values: any) => {
             props.formHandler(values);
         },
     });
+
+    const addNewAvailabilityRuleField = () => {
+        let newAvailabilityRule: AvailabilityRule = {
+            startDate: "",
+            endDate: ""
+        };
+        formik.values.availabilityRules.push(newAvailabilityRule);
+    };
 
     return (
         <Form onSubmit={formik.handleSubmit}>
@@ -70,15 +79,18 @@ const ProductForm = (props: ProductFormProps) => {
             <Form.Group>
                 <Form.Label>Availability Rules</Form.Label>
                 {
-                    props.availabilityRules && props.availabilityRules.map((rule) =>
+                    formik.values.availabilityRules &&
+                    formik.values.availabilityRules.map((rule: AvailabilityRule, index: number) =>
                         <Form.Row>
                             <Form.Group as={Col}>
-                                <Form.Control value={rule.startDate}
+                                <Form.Control name={"ar_" + index + "_startDate"}
+                                              value={rule.startDate}
                                               placeholder="Start date (dd-mm-yyyy)"
                                 />
                             </Form.Group>
                             <Form.Group as={Col}>
-                                <Form.Control value={rule.endDate}
+                                <Form.Control name={"ar_" + index + "_endDate"}
+                                              value={rule.endDate}
                                               placeholder="End dat (dd-mm-yyyy)"
                                 />
                             </Form.Group>
@@ -86,11 +98,9 @@ const ProductForm = (props: ProductFormProps) => {
                     )
                 }
                 <div>
-                    <a href="#">Add new rule</a>
+                    <a href="#" onClick={addNewAvailabilityRuleField}>Add new rule</a>
                 </div>
             </Form.Group>
-
-
 
             <Button variant="primary" type="submit">Submit</Button>
         </Form>
