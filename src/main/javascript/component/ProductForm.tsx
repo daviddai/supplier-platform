@@ -2,6 +2,8 @@ import React from 'react';
 import { useFormik } from 'formik';
 
 import { Button, Form, Col } from 'react-bootstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
 export interface AvailabilityRule {
     startDate: string,
@@ -102,27 +104,37 @@ const ProductForm = (props: ProductFormProps) => {
                     formik.values.availabilityRules &&
                     formik.values.availabilityRules.map((rule: AvailabilityRule, index: number) =>
                         <Form.Row key={"ar_" + index}>
-                            <Form.Group as={Col}>
-                                <Form.Control name={"availabilityRules[" + index + "]['startDate']"}
-                                              onChange={formik.handleChange}
-                                              value={rule.startDate}
-                                              placeholder="Start date (dd-mm-yyyy)"
-                                />
-                                {
-                                    formik.errors.availabilityRules && formik.errors.availabilityRules['ar_' + index + '_startDate']
-                                        ? <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_startDate']}</Form.Text> : null
-                                }
-                            </Form.Group>
-                            <Form.Group as={Col}>
-                                <Form.Control name={"availabilityRules[" + index + "]['endDate']"}
-                                              onChange={formik.handleChange}
-                                              value={rule.endDate}
-                                              placeholder="End date (dd-mm-yyyy)"
-                                />
-                                {
-                                    formik.errors.availabilityRules && formik.errors.availabilityRules['ar_' + index + '_endDate']
-                                        ? <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_endDate']}</Form.Text> : null
-                                }
+                            <Col md={5}>
+                                <Form.Group>
+                                    <Form.Control name={"availabilityRules[" + index + "]['startDate']"}
+                                                  onChange={formik.handleChange}
+                                                  value={rule.startDate}
+                                                  placeholder="Start date (dd-mm-yyyy)"
+                                    />
+                                    {
+                                        formik.errors.availabilityRules &&
+                                        formik.errors.availabilityRules['ar_' + index + '_startDate'] ?
+                                            <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_startDate']}</Form.Text> : null
+                                    }
+                                </Form.Group>
+                            </Col>
+                            <Col md={5}>
+                                <Form.Group>
+
+                                        <Form.Control name={"availabilityRules[" + index + "]['endDate']"}
+                                                      onChange={formik.handleChange}
+                                                      value={rule.endDate}
+                                                      placeholder="End date (dd-mm-yyyy)"
+                                        />
+                                        {
+                                            formik.errors.availabilityRules &&
+                                            formik.errors.availabilityRules['ar_' + index + '_endDate'] ?
+                                                <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_endDate']}</Form.Text> : null
+                                        }
+                                </Form.Group>
+                            </Col>
+                            <Form.Group as={Col} className="p-2">
+                                <FontAwesomeIcon icon={faWindowClose} />
                             </Form.Group>
                         </Form.Row>
                     )
@@ -131,7 +143,6 @@ const ProductForm = (props: ProductFormProps) => {
                     <a href="#" onClick={addNewAvailabilityRuleField}>Add new rule</a>
                 </div>
             </Form.Group>
-
             <Button variant="primary" type="submit">Submit</Button>
         </Form>
     );
