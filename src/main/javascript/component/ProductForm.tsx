@@ -73,6 +73,10 @@ const ProductForm = (props: ProductFormProps) => {
         formik.values.availabilityRules.push(newAvailabilityRule);
     };
 
+    const removeAvailabilityRuleField = (event: any) => {
+
+    };
+
     return (
         <Form onSubmit={formik.handleSubmit}>
             <Form.Group>
@@ -120,7 +124,6 @@ const ProductForm = (props: ProductFormProps) => {
                             </Col>
                             <Col md={5}>
                                 <Form.Group>
-
                                         <Form.Control name={"availabilityRules[" + index + "]['endDate']"}
                                                       onChange={formik.handleChange}
                                                       value={rule.endDate}
@@ -134,7 +137,7 @@ const ProductForm = (props: ProductFormProps) => {
                                 </Form.Group>
                             </Col>
                             <Form.Group as={Col} className="p-2">
-                                <FontAwesomeIcon icon={faWindowClose} />
+                                <FontAwesomeIcon icon={faWindowClose} onClick={removeAvailabilityRuleField} key={index}/>
                             </Form.Group>
                         </Form.Row>
                     )
