@@ -5,6 +5,8 @@ import { Button, Form, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
+import './product-form.css';
+
 export interface AvailabilityRule {
     startDate: string,
     endDate: string
@@ -137,7 +139,10 @@ const ProductForm = (props: ProductFormProps) => {
                                 </Form.Group>
                             </Col>
                             <Form.Group as={Col} className="p-2">
-                                <FontAwesomeIcon icon={faWindowClose} onClick={removeAvailabilityRuleField} key={index}/>
+                                <FontAwesomeIcon icon={faWindowClose}
+                                                 key={index}
+                                                 className="remove-availability-rule-icon"
+                                />
                             </Form.Group>
                         </Form.Row>
                     )

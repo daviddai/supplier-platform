@@ -52,6 +52,6 @@ const client = {
 };
 
 module.exports = [
-    merge(javascriptLoader, server),
+    merge(cssLoader, javascriptLoader, server),
     merge(cssLoader, javascriptLoader, client)
 ];
