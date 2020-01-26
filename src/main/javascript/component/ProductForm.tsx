@@ -140,10 +140,9 @@ const ProductForm = (props: ProductFormProps) => {
                             </Col>
                             <Col>
                                 <Form.Group className="p-2">
-                                    <span key={index}
-                                          onClick={removeAvailabilityRuleField}
-                                    >
+                                    <span onClick={removeAvailabilityRuleField}>
                                         <FontAwesomeIcon icon={faWindowClose}
+                                                         key={index}
                                                          className="remove-availability-rule-icon"
                                         />
                                     </span>
