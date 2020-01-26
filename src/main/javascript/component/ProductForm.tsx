@@ -76,7 +76,7 @@ const ProductForm = (props: ProductFormProps) => {
     };
 
     const removeAvailabilityRuleField = (event: any) => {
-
+        delete formik.values.availabilityRules[event.target.key];
     };
 
     return (
@@ -126,24 +126,29 @@ const ProductForm = (props: ProductFormProps) => {
                             </Col>
                             <Col md={5}>
                                 <Form.Group>
-                                        <Form.Control name={"availabilityRules[" + index + "]['endDate']"}
-                                                      onChange={formik.handleChange}
-                                                      value={rule.endDate}
-                                                      placeholder="End date (dd-mm-yyyy)"
-                                        />
-                                        {
-                                            formik.errors.availabilityRules &&
-                                            formik.errors.availabilityRules['ar_' + index + '_endDate'] ?
-                                                <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_endDate']}</Form.Text> : null
-                                        }
+                                    <Form.Control name={"availabilityRules[" + index + "]['endDate']"}
+                                                  onChange={formik.handleChange}
+                                                  value={rule.endDate}
+                                                  placeholder="End date (dd-mm-yyyy)"
+                                    />
+                                    {
+                                        formik.errors.availabilityRules &&
+                                        formik.errors.availabilityRules['ar_' + index + '_endDate'] ?
+                                            <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_endDate']}</Form.Text> : null
+                                    }
                                 </Form.Group>
                             </Col>
-                            <Form.Group as={Col} className="p-2">
-                                <FontAwesomeIcon icon={faWindowClose}
-                                                 key={index}
-                                                 className="remove-availability-rule-icon"
-                                />
-                            </Form.Group>
+                            <Col>
+                                <Form.Group className="p-2">
+                                    <span key={index}
+                                          onClick={removeAvailabilityRuleField}
+                                    >
+                                        <FontAwesomeIcon icon={faWindowClose}
+                                                         className="remove-availability-rule-icon"
+                                        />
+                                    </span>
+                                </Form.Group>
+                            </Col>
                         </Form.Row>
                     )
                 }
