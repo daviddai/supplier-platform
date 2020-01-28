@@ -75,8 +75,8 @@ const ProductForm = (props: ProductFormProps) => {
         formik.values.availabilityRules.push(newAvailabilityRule);
     };
 
-    const removeAvailabilityRuleField = (event: any) => {
-        delete formik.values.availabilityRules[event.target.key];
+    const removeAvailabilityRuleField = (index: number) => {
+        formik.values.availabilityRules.splice(index, 1);
     };
 
     return (
@@ -140,9 +140,8 @@ const ProductForm = (props: ProductFormProps) => {
                             </Col>
                             <Col>
                                 <Form.Group className="p-2">
-                                    <span onClick={removeAvailabilityRuleField}>
+                                    <span onClick={() => removeAvailabilityRuleField(index)}>
                                         <FontAwesomeIcon icon={faWindowClose}
-                                                         key={index}
                                                          className="remove-availability-rule-icon"
                                         />
                                     </span>
