@@ -26,10 +26,17 @@ const ProductForm = (props: ProductFormProps) => {
 
     const submitProductForm = (evt: any) => {
         evt.preventDefault();
-        validate(props.formHandler);
+
+        if (validate()) {
+            props.formHandler({
+                name: name,
+                description: description,
+                availabilityRules: availabilityRules
+            });
+        }
     };
 
-    const validate = (callback?: Function) => {
+    const validate = (): boolean => {
         let newErrors = new Map();
 
         if (name === '') {
@@ -54,13 +61,7 @@ const ProductForm = (props: ProductFormProps) => {
 
         setErrors(newErrors);
 
-        if (callback && newErrors.size == 0) {
-            callback({
-                name: name,
-                description: description,
-                availabilityRules: availabilityRules
-            })
-        }
+        return newErrors.size == 0;
     };
 
     return (
