@@ -1,7 +1,5 @@
-import React from 'react';
-import { FieldArray, Formik, useFormik } from 'formik';
+import React, { useState } from 'react';
 
-import { Button, Form, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
 
@@ -21,143 +19,146 @@ export interface ProductFormProps {
 
 const ProductForm = (props: ProductFormProps) => {
 
-    const validate = (values: any) => {
-        const errors: any = {};
-        
-        if (!values.name) {
-           errors.name = 'Product name cannot be empty';
-        }
+    const [name, setName] = useState(props.name || '');
+    const [description, setDescription] = useState(props.description || '');
+    const [availabilityRules, setAvailabilityRules] = useState(props.availabilityRules || Array<AvailabilityRule>());
+    const [errors, setErrors] = useState(new Map());
 
-        if (!values.description) {
-            errors.description = 'Product description cannot be empty';
-        }
-        
-        if (values.availabilityRules) {
-            errors.availabilityRules = {};
-
-            values.availabilityRules.map((rule: AvailabilityRule, index: number) => {
-
-                if (!rule.startDate) {
-                    errors.availabilityRules['ar_' + index + '_startDate'] = 'Start date cannot be empty';
-                }
-
-                if (!rule.endDate) {
-                    errors.availabilityRules['ar_' + index + '_endDate'] = 'End date cannot be empty';
-                }
-            });
-
-            if (Object.keys(errors.availabilityRules).length === 0) {
-                delete errors['availabilityRules'];
-            }
-        }
-
-        return errors;
+    const submitProductForm = (evt: any) => {
+        evt.preventDefault();
+        validate(props.formHandler);
     };
 
-    const formik = useFormik({
-        initialValues: {
-            name: props.name,
-            description: props.description,
-            availabilityRules: props.availabilityRules || Array<AvailabilityRule>()
-        },
-        validate,
-        onSubmit: (values: any) => {
-            props.formHandler(values);
-        },
-    });
+    const validate = (callback?: Function) => {
+        let newErrors = new Map();
 
-    const addNewAvailabilityRuleField = () => {
-        let newAvailabilityRule: AvailabilityRule = {
-            startDate: "",
-            endDate: ""
-        };
+        if (name === '') {
+            newErrors.set('name', 'Product name is required');
+        }
 
-        formik.values.availabilityRules.push(newAvailabilityRule);
+        if (description === '') {
+            newErrors.set('description', 'Product description is required');
+        }
+
+        availabilityRules.map((rule: AvailabilityRule, index: number) => {
+
+
+            if (!rule.startDate) {
+                newErrors.set('ar_' + index + '_startDate', 'Start date is required');
+            }
+
+            if (!rule.endDate) {
+                newErrors.set('ar_' + index + '_endDate', 'End date is required');
+            }
+        });
+
+        setErrors(newErrors);
+
+        if (callback && newErrors.size == 0) {
+            callback({
+                name: name,
+                description: description,
+                availabilityRules: availabilityRules
+            })
+        }
     };
 
     return (
-        <Formik render={() => (
-            <Form onSubmit={formik.handleSubmit}>
-                <Form.Group>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control id="name"
-                                  name="name"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.name}
-                    />
-                    {
-                        formik.errors.name ? <Form.Text className="text-muted">{formik.errors.name}</Form.Text> : null
-                    }
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control id="description"
-                                  name="description"
-                                  as="textarea"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.description}
-                    />
-                    {
-                        formik.errors.description ? <Form.Text className="text-muted">{formik.errors.description}</Form.Text> : null
-                    }
-                </Form.Group>
-                <Form.Group>
-                    <FieldArray name="availabilityRules"
-                                render={(arrayHelpers: any) => {
-                                    return (
-                                        formik.values.availabilityRules &&
-                                        formik.values.availabilityRules.map((rule: AvailabilityRule, index: number) => {
-                                            return (
-                                                <Form.Row key={"ar_" + index}>
-                                                    <Col md={5}>
-                                                        <Form.Group>
-                                                            <Form.Control name={"availabilityRules[" + index + "]['startDate']"}
-                                                                          onChange={formik.handleChange}
-                                                                          value={rule.startDate}
-                                                                          placeholder="Start date (dd-mm-yyyy)"
-                                                            />
-                                                            {
-                                                                formik.errors.availabilityRules &&
-                                                                formik.errors.availabilityRules['ar_' + index + '_startDate'] ?
-                                                                    <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_startDate']}</Form.Text> : null
-                                                            }
-                                                        </Form.Group>
-                                                    </Col>
-                                                    <Col md={5}>
-                                                        <Form.Group>
-                                                            <Form.Control name={"availabilityRules[" + index + "]['endDate']"}
-                                                                          onChange={formik.handleChange}
-                                                                          value={rule.endDate}
-                                                                          placeholder="End date (dd-mm-yyyy)"
-                                                            />
-                                                            {
-                                                                formik.errors.availabilityRules &&
-                                                                formik.errors.availabilityRules['ar_' + index + '_endDate'] ?
-                                                                    <Form.Text className="text-muted">{formik.errors.availabilityRules['ar_' + index + '_endDate']}</Form.Text> : null
-                                                            }
-                                                        </Form.Group>
-                                                    </Col>
-                                                    <Col>
-                                                        <Form.Group className="p-2">
-                                                        <span onClick={() => arrayHelpers.remove(index)}>
-                                                            <FontAwesomeIcon icon={faWindowClose}
-                                                                             className="remove-availability-rule-icon"
-                                                            />
-                                                        </span>
-                                                        </Form.Group>
-                                                    </Col>
-                                                </Form.Row>
-                                            );
-                                        })
-                                    )}}
-                    />
-                    <div>
-                        <a href="#" onClick={addNewAvailabilityRuleField}>Add new rule</a>
-                    </div>
-                </Form.Group>
-                <Button variant="primary" type="submit">Submit</Button>
-            </Form>)}
-        />
+        <form onSubmit={submitProductForm} method="post">
+            <div className="form-group">
+                <label>Name</label>
+                <input name="name"
+                       className='form-control'
+                       onChange={(evt: any) => {
+                           setName(evt.target.value);
+                           validate();
+                       }}
+                       value={name}
+                />
+                {errors.get('name') && <small className="form-text text-muted">{errors.get('name')}</small>}
+            </div>
+            <div className="form-group">
+                <label>Description</label>
+                <textarea name="description"
+                          className='form-control'
+                          onChange={(evt: any) => {
+                              setDescription(evt.target.value);
+                              validate();
+                          }}
+                          value={description}
+                />
+                {errors.get('description') && <small className="form-text text-muted">{errors.get('description')}</small>}
+            </div>
+            <div className="form-group">
+                <label>Availability Rules</label>
+                {
+                    availabilityRules && availabilityRules.map((rule: AvailabilityRule, index: number) => (
+                        <div key={"ar_" + index} className="row">
+                            <div className="col-5">
+                                <div className="form-group">
+                                    <input name={"availabilityRules[" + index + "]['startDate']"}
+                                           className="form-control"
+                                           onChange={(evt: any) => {
+                                               availabilityRules[index].startDate = evt.target.value;
+                                               setAvailabilityRules([...availabilityRules])
+                                           }}
+                                           value={rule.startDate}
+                                           placeholder="Start date (dd-mm-yyyy)"
+                                    />
+                                    {
+                                        errors.get('ar_' + index + '_startDate') &&
+                                        <small className="form-text text-muted">{errors.get('ar_' + index + '_startDate')}</small>
+                                    }
+                                </div>
+                            </div>
+                            <div className="col-5">
+                                <div className="form-group">
+                                    <input name={"availabilityRules[" + index + "]['endDate']"}
+                                           className="form-control"
+                                           onChange={(evt: any) => {
+                                               availabilityRules[index].endDate = evt.target.value;
+                                               setAvailabilityRules([...availabilityRules])
+                                           }}
+                                           value={rule.endDate}
+                                           placeholder="End date (dd-mm-yyyy)"
+                                    />
+                                    {
+                                        errors.get('ar_' + index + '_endDate') &&
+                                        <small className="form-text text-muted">{errors.get('ar_' + index + '_endDate')}</small>
+                                    }
+                                </div>
+                            </div>
+                            <div className="col-2">
+                                <div className="form-group p-2">
+                                    <span onClick={() => {
+                                        availabilityRules.splice(index, 1);
+                                        setAvailabilityRules([...availabilityRules]);
+                                    }}>
+                                        <FontAwesomeIcon icon={faWindowClose}
+                                                         className="remove-availability-rule-icon"
+                                        />
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+                <div>
+                    <a href="#"
+                       onClick={() => {
+                           let newRule: AvailabilityRule = {
+                               startDate: '',
+                               endDate: ''
+                           };
+                           availabilityRules.push(newRule);
+                           setAvailabilityRules([...availabilityRules]);
+                       }}>
+                        Add new rule
+                    </a>
+                </div>
+            </div>
+            <button type="submit" className="btn btn-primary">Submit</button>
+        </form>
     );
 };
 
